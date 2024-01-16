@@ -1,4 +1,5 @@
 import express from 'express';
+import { ArtistRoutes } from '../modules/artist/artist.route';
 import { AuthRoutes } from '../modules/auth/auth.route';
 import { GenreRoutes } from '../modules/genre/genre.route';
 import { UserRoutes } from '../modules/user/user.route';
@@ -17,6 +18,10 @@ const moduleRoutes = [
   {
     path: '/genres',
     route: GenreRoutes,
+  },
+  {
+    path: '/artists',
+    route: ArtistRoutes,
   },
 ];
 
