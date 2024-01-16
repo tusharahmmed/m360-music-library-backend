@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum USER_ROLE {
+  user
+  super_admin
+}
+
+model User {
+  id        String     @id @default(uuid())
+  name      String
+  email     String     @unique
+  role      USER_ROLE? @default(user)
+  password  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  libraries Library[]
+
+  @@map("users")
+}
+
+model Album {
+  id          String        @id @default(uuid())
+  title       String
+  releaseYear String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  artists     AlbumArtist[]
+  genre       AlbumGenre[]
+  songs       Song[]
+  libraries   Library[]
+
+  @@map("albums")
+}
+
+model Artist {
+  id        String        @id @default(uuid())
+  title     String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  albums    AlbumArtist[]
+
+  @@map("artists")
+}
+
+model AlbumArtist {
+  albumId String
+  album   Album  @relation(fields: [albumId], references: [id])
+
+  artistId String
+  artist   Artist @relation(fields: [artistId], references: [id])
+
+  @@id([albumId, artistId])
+  @@map("album_artists")
+}
+
+model Genre {
+  id        String       @id @default(uuid())
+  title     String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  albums    AlbumGenre[]
+
+  @@map("gernes")
+}
+
+model AlbumGenre {
+  albumId String
+  album   Album  @relation(fields: [albumId], references: [id])
+
+  genreId String
+  genre   Genre  @relation(fields: [genreId], references: [id])
+
+  @@id([albumId, genreId])
+  @@map("album_genres")
+}
+
+model Song {
+  id        String   @id @default(uuid())
+  title     String
+  duration  String
+  albumId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  album     Album     @relation(fields: [albumId], references: [id])
+  libraries Library[]
+
+  @@map("songs")
+}
+
+model Library {
+  id      String  @id @default(uuid())
+  userId  String
+  albumId String? @default("")
+  songId  String? @default("")
+
+  user  User   @relation(fields: [userId], references: [id])
+  album Album? @relation(fields: [albumId], references: [id])
+  song  Song?  @relation(fields: [songId], references: [id])
+
+  @@map("libraries")
+}
