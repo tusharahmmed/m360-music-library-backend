@@ -54,10 +54,10 @@ model Artist {
 
 model AlbumArtist {
   albumId String
-  album   Album  @relation(fields: [albumId], references: [id])
+  album   Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
 
   artistId String
-  artist   Artist @relation(fields: [artistId], references: [id])
+  artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
 
   @@id([albumId, artistId])
   @@map("album_artists")
@@ -75,10 +75,10 @@ model Genre {
 
 model AlbumGenre {
   albumId String
-  album   Album  @relation(fields: [albumId], references: [id])
+  album   Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
 
   genreId String
-  genre   Genre  @relation(fields: [genreId], references: [id])
+  genre   Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade)
 
   @@id([albumId, genreId])
   @@map("album_genres")
@@ -92,7 +92,7 @@ model Song {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  album     Album     @relation(fields: [albumId], references: [id])
+  album     Album     @relation(fields: [albumId], references: [id], onDelete: Cascade)
   libraries Library[]
 
   @@map("songs")
@@ -104,9 +104,9 @@ model Library {
   albumId String? @default("")
   songId  String? @default("")
 
-  user  User   @relation(fields: [userId], references: [id])
-  album Album? @relation(fields: [albumId], references: [id])
-  song  Song?  @relation(fields: [songId], references: [id])
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  album Album? @relation(fields: [albumId], references: [id], onDelete: SetNull)
+  song  Song?  @relation(fields: [songId], references: [id], onDelete: SetNull)
 
   @@map("libraries")
 }
