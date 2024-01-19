@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { ENUM_USER_ROLE } from '../../../enums/user';
 
 const signup = z.object({
   body: z.object({
@@ -7,9 +6,7 @@ const signup = z.object({
 
     email: z.string({ required_error: 'Email is required' }),
     password: z.string({ required_error: 'Password is required' }),
-    role: z
-      .enum([...Object.values(ENUM_USER_ROLE)] as [string, ...string[]])
-      .optional(),
+    role: z.enum(['user']).optional(),
   }),
 });
 

@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "libraries" ALTER COLUMN "albumId" DROP DEFAULT,
-ALTER COLUMN "songId" DROP DEFAULT;
