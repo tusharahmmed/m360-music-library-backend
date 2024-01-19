@@ -13,7 +13,6 @@ import { IAlbumFilters, ICreateAlbumPayload } from './album.interface';
 // create new album
 const createAlbum = async (payload: ICreateAlbumPayload) => {
   const { artists, genres, ...albumData } = payload;
-  console.log(payload);
 
   const newAlbum = await prisma.$transaction(async transcationClient => {
     const result = await transcationClient.album.create({
