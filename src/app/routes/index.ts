@@ -3,6 +3,7 @@ import { AlbumRoutes } from '../modules/album/album.route';
 import { ArtistRoutes } from '../modules/artist/artist.route';
 import { AuthRoutes } from '../modules/auth/auth.route';
 import { GenreRoutes } from '../modules/genre/genre.route';
+import { LibraryRoutes } from '../modules/library/library.route';
 import { SongRoutes } from '../modules/song/song.route';
 import { UserRoutes } from '../modules/user/user.route';
 
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: '/songs',
     route: SongRoutes,
+  },
+  {
+    path: '/libraries',
+    route: LibraryRoutes,
   },
 ];
 

@@ -99,10 +99,12 @@ model Song {
 }
 
 model Library {
-  id      String  @id @default(uuid())
-  userId  String
-  albumId String? @default("")
-  songId  String? @default("")
+  id        String   @id @default(uuid())
+  userId    String
+  albumId   String?
+  songId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   album Album? @relation(fields: [albumId], references: [id], onDelete: SetNull)
